@@ -36,5 +36,6 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - model
+      model:
+        condition: service_healthy
     restart: always
