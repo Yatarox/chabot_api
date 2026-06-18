@@ -29,8 +29,14 @@ class ModelService:
             print(f"Model name: {self.config.model_name}")
             print(f"Health check failed: {e}")
             return False
+        
+    def clean_prompt(self, prompt: str) -> str:
+        if not isinstance(prompt, str):
+            return ""
+        return " ".join(prompt.split())
 
     def generate_response(self, prompt: str) -> str:
+        prompt = self.clean_prompt(prompt)
         response = self.client.chat.completions.create(
             model=self.config.model_name,
             messages=[{"role": "user", "content": prompt}],
